@@ -20,7 +20,7 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-    <!-- Main Stylesheet -->
+    <!-- Main Stylesheet (Ensure this path matches your folder) -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -33,6 +33,7 @@
             <div class="header-inner">
                 <div class="logo">
                     <a href="index.html">
+                        <!-- Fixed local image path -->
                         <img src="images/FREE Cleaning Logo Canva Template 020.jpg" alt="Gebs Cleaning Services logo" width="45" height="45">
                         <span class="logo-text">Gebs <span>Cleaning</span></span>
                     </a>
@@ -75,7 +76,7 @@
 
                     <!-- Form Column -->
                     <div class="enquiry-form-wrapper">
-                        <!-- FORMSPREE ACTION ADDED HERE -->
+                        <!-- Added Formspree Action and Method -->
                         <form id="enquiryForm" action="https://formspree.io/f/maeeldpw" method="POST" novalidate>
                             
                             <div class="form-row">
@@ -142,11 +143,12 @@
                                 <textarea id="specialRequirements" name="specialRequirements" placeholder="Any specific areas to focus on, pets in the home, etc." rows="4"></textarea>
                             </div>
                         
-                            <button type="submit" class="btn-primary btn-lg" id="submitBtn" style="width: 100%;">
+                            <!-- Added ID to the button so JS can target it -->
+                            <button type="submit" id="submitBtn" class="btn-primary btn-lg" style="width: 100%;">
                                 <i class="fas fa-paper-plane"></i> Submit Quote Request
                             </button>
                         
-                            <!-- Success Message (Hidden by default) -->
+                            <!-- Success Message -->
                             <div id="successMessage" class="success-message" hidden>
                                 <i class="fas fa-check-circle"></i>
                                 <h3>Form Submitted Successfully!</h3>
@@ -157,9 +159,9 @@
                                 </button>
                             </div>
                         </form>
-                    </div> <!-- CLOSES Form Column -->
+                    </div>
 
-                    <!-- Info Column (Why Choose Gebs?) -->
+                    <!-- Info Column -->
                     <aside class="enquiry-info">
                         <h3>Why Choose Gebs?</h3>
                         <div class="info-item">
@@ -206,9 +208,9 @@
                         </div>
                     </aside>
 
-                </div> <!-- CLOSES enquiry-grid -->
-            </div> <!-- CLOSES container -->
-        </section> <!-- CLOSES enquiry-section -->
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -266,79 +268,8 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- JavaScript -->
+    <!-- Single JavaScript File -->
     <script src="js/main.js"></script>
 
-    <!-- Custom AJAX Script for Formspree -->
-    <script>
-        document.getElementById('enquiryForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent default page reload
-            
-            // Basic check to ensure fields are filled (the main.js handles the red borders)
-            if (this.querySelector('.has-error')) {
-                return; // Stop if there are validation errors
-            }
-
-            var form = this;
-            var submitBtn = document.getElementById('submitBtn');
-            var originalBtnText = submitBtn.innerHTML;
-            
-            // Show loading state
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-            submitBtn.disabled = true;
-
-            // Gather form data
-            var formData = new FormData(form);
-
-            // Send to Formspree via AJAX
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            }).then(function(response) {
-                if (response.ok) {
-                    // Success! Hide form elements and show success message
-                    var name = document.getElementById('fullName').value;
-                    var service = document.getElementById('serviceType').value;
-                    var size = document.getElementById('propertySize').value;
-                    
-                    // Calculate estimate logic (replicated from main.js for the success message)
-                    var baseRanges = { 'residential': [250, 850], 'commercial': [450, 2500], 'end-of-lease': [550, 1200], 'carpet': [200, 800] };
-                    var sizeMulti = { small: 1, medium: 1.5, large: 2.2 };
-                    var range = baseRanges[service] || [250, 850];
-                    var sm = sizeMulti[size] || 1;
-                    var estimateLow = Math.round(range[0] * sm);
-                    var estimateHigh = Math.round(range[1] * sm);
-
-                    form.querySelectorAll('.form-group, .form-row, #submitBtn').forEach(function(el) {
-                        el.style.display = 'none';
-                    });
-
-                    document.getElementById('successName').textContent = name;
-                    document.getElementById('successEstimate').textContent = 'Estimated Cost: R' + estimateLow + ' - R' + estimateHigh;
-                    
-                    var successBox = document.getElementById('successMessage');
-                    successBox.hidden = false;
-                    successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                } else {
-                    // Error handling
-                    alert('Oops! There was a problem submitting your form. Please try again.');
-                    submitBtn.innerHTML = originalBtnText;
-                    submitBtn.disabled = false;
-                }
-            }).catch(function(error) {
-                alert('Oops! There was a network error. Please try again.');
-                submitBtn.innerHTML = originalBtnText;
-                submitBtn.disabled = false;
-            });
-        });
-    </script>
-</body>
-</html>
-    <!-- JavaScript File -->
-    <script src="js/main.js"></script>
-    
 </body>
 </html>
