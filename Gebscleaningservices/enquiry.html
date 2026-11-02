@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Get a Free Cleaning Quote | Gebs Cleaning Pretoria</title>
+    <meta name="description" content="Request a free, no-obligation cleaning quote from Gebs Cleaning Services. Fill in our quick form and receive a response within 24 hours.">
+    <meta name="keywords" content="free cleaning quote, cleaning quote Pretoria, request cleaning quote, cleaning estimate, book cleaning service">
+    <meta name="author" content="Gebs Cleaning Services">
+    <meta property="og:url" content="https://[your-username].github.io/[repo-name]/enquiry.html">
+    <link rel="canonical" href="https://[your-username].github.io/[repo-name]/enquiry.html">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="c:\Users\Tondi\Documents\Rosebank\WEDE 5020\POE.WEDE5020(gebs)\Gebscleaningservices\images\FREE Cleaning Logo Canva Template 020.jpg" alt="Gebs Cleaning Services logo" width="45" height="45">
+                        <span class="logo-text">Gebs <span>Cleaning</span></span>
+                    </a>
+                </div>
+                <nav class="main-nav" aria-label="Main navigation">
+                    <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                        <span class="hamburger"></span>
+                    </button>
+                    <ul class="nav-menu">
+                        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+                        <li class="nav-item"><a href="enquiry.html" class="nav-link active">Get a Quote</a></li>
+                        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="header-cta">
+                    <a href="tel:+27821234567" class="btn-call">
+                        <i class="fas fa-phone"></i> 082 123 4567
+                    </a>
+                    <a href="enquiry.html" class="btn-quote">Get a Quote</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1>Get a Free Quote</h1>
+                <p>Fill in the form below and we'll respond within 24 hours</p>
+            </div>
+        </section>
+        <!-- Enquiry Section -->
+        <section class="enquiry-section section">
+            <div class="container">
+                <div class="enquiry-grid">
+
+                    <!-- Form Column -->
+                    <div class="enquiry-form-wrapper">
+                        <form id="enquiryForm" novalidate>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fullName">Full Name *</label>
+                                    <input type="text" id="fullName" name="fullName" required placeholder="John Doe">
+                                    <span class="error-message">Please enter your full name.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email Address *</label>
+                                    <input type="email" id="email" name="email" required placeholder="john@example.com">
+                                    <span class="error-message">Please enter a valid email address.</span>
+                                </div>
+                            </div>
+                        
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="phone">Phone Number *</label>
+                                    <input type="tel" id="phone" name="phone" required placeholder="082 123 4567">
+                                    <span class="error-message">Please enter a valid phone number.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactMethod">Preferred Contact Method</label>
+                                    <select id="contactMethod" name="contactMethod">
+                                        <option value="email">Email</option>
+                                        <option value="phone">Phone</option>
+                                        <option value="sms">SMS</option>
+                                    </select>
+                                </div>
+                            </div>
+                        
+                            <div class="form-group">
+                                <label for="address">Property Address *</label>
+                                <input type="text" id="address" name="address" required placeholder="123 Main Street, Pretoria">
+                                <span class="error-message">Please enter the property address.</span>
+                            </div>
+                        
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="serviceType">Service Type *</label>
+                                    <select id="serviceType" name="serviceType" required>
+                                        <option value="">Select a service...</option>
+                                        <option value="residential">Residential Cleaning</option>
+                                        <option value="commercial">Commercial Cleaning</option>
+                                        <option value="end-of-lease">End-of-Lease Cleaning</option>
+                                        <option value="carpet">Carpet &amp; Upholstery Cleaning</option>
+                                    </select>
+                                    <span class="error-message">Please select a service.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="propertySize">Property Size *</label>
+                                    <select id="propertySize" name="propertySize" required>
+                                        <option value="">Select size...</option>
+                                        <option value="small">Small (1-2 rooms)</option>
+                                        <option value="medium">Medium (3-4 rooms)</option>
+                                        <option value="large">Large (5+ rooms)</option>
+                                    </select>
+                                    <span class="error-message">Please select a property size.</span>
+                                </div>
+                            </div>
+                        
+                            <div class="form-group">
+                                <label for="specialRequirements">Special Requirements (Optional)</label>
+                                <textarea id="specialRequirements" name="specialRequirements" placeholder="Any specific areas to focus on, pets in the home, etc." rows="4"></textarea>
+                            </div>
+                        
+                            <button type="submit" class="btn-primary btn-lg" style="width: 100%;">
+                                <i class="fas fa-paper-plane"></i> Submit Quote Request
+                            </button>
+                        
+                            <!-- Success Message (Hidden by default) -->
+                            <div id="successMessage" class="success-message" hidden>
+                                <i class="fas fa-check-circle"></i>
+                                <h3>Form Submitted Successfully!</h3>
+                                <p>Thank you, <span id="successName">Customer</span>. We have received your quote request and will contact you within 24 hours.</p>
+                                <p class="estimate-text" id="successEstimate"></p>
+                                <button type="button" class="btn-outline btn-sm" onclick="location.reload()" style="margin-top: 1rem; color: var(--color-primary); border-color: var(--color-primary);">
+                                    Submit Another Request
+                                </button>
+                            </div>
+                        </form>
+                    </div> <!-- CLOSES Form Column -->
+
+                    <!-- Info Column (Why Choose Gebs?) -->
+                    <aside class="enquiry-info">
+                        <h3>Why Choose Gebs?</h3>
+                        <div class="info-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Free Quotes</strong>
+                                <p>No-obligation quotes with transparent pricing</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>Quick Response</strong>
+                                <p>We respond within 24 hours</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <strong>100% Satisfaction</strong>
+                                <p>We guarantee your satisfaction or we'll re-clean</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-leaf"></i>
+                            <div>
+                                <strong>Eco-Friendly</strong>
+                                <p>Safe, non-toxic cleaning products</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>Call Us Directly</strong>
+                                <p><a href="tel:+27821234567" style="color: var(--color-primary); font-weight: 600;">082 123 4567</a></p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>Email Us</strong>
+                                <p><a href="mailto:info@gebscleaning.co.za" style="color: var(--color-primary);">info@gebscleaning.co.za</a></p>
+                            </div>
+                        </div>
+                    </aside>
+
+                </div> <!-- CLOSES enquiry-grid -->
+            </div> <!-- CLOSES container -->
+        </section> <!-- CLOSES enquiry-section -->
+                    <!-- Info Column -->
+                    <aside class="enquiry-info">
+                        <h3>Why Choose Gebs?</h3>
+                        <div class="info-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Free Quotes</strong>
+                                <p>No-obligation quotes with transparent pricing</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>Quick Response</strong>
+                                <p>We respond within 24 hours</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <strong>100% Satisfaction</strong>
+                                <p>We guarantee your satisfaction or we'll re-clean</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-leaf"></i>
+                            <div>
+                                <strong>Eco-Friendly</strong>
+                                <p>Safe, non-toxic cleaning products</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>Call Us Directly</strong>
+                                <p><a href="tel:+27821234567" style="color: var(--color-primary); font-weight: 600;">082 123 4567</a></p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>Email Us</strong>
+                                <p><a href="mailto:info@gebscleaning.co.za" style="color: var(--color-primary);">info@gebscleaning.co.za</a></p>
+                            </div>
+                        </div>
+                    </aside>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Gebs Cleaning Services</h3>
+                    <p>Professional residential and commercial cleaning services in Pretoria. Reliable, eco-friendly, and fully insured.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="enquiry.html">Get a Quote</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="services.html#residential">Residential Cleaning</a></li>
+                        <li><a href="services.html#commercial">Commercial Cleaning</a></li>
+                        <li><a href="services.html#end-of-lease">End-of-Lease Cleaning</a></li>
+                        <li><a href="services.html#carpet">Carpet & Upholstery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-phone"></i> <a href="tel:+27821234567">082 123 4567</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:info@gebscleaning.co.za">info@gebscleaning.co.za</a></li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Main Street, Pretoria</li>
+                        <li><i class="fas fa-clock"></i> Mon-Fri: 8AM-6PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Gebs Cleaning Services. All rights reserved.</p>
+                <p>Designed with <i class="fas fa-heart"></i> in Pretoria</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript File -->
+    <script src="js/main.js"></script>
+    
+</body>
+</html>
