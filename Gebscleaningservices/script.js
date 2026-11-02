@@ -227,12 +227,11 @@ document.addEventListener('DOMContentLoaded', function () {
         var submitBtn = document.getElementById('submitBtn');
 
         enquiryForm.addEventListener('submit', function (e) {
-            e.preventDefault(); // Stop page reload
+            e.preventDefault(); 
             
             var isValid = true;
             var requiredFields = enquiryForm.querySelectorAll('[required]');
 
-            // 1. Check all required fields for errors
             requiredFields.forEach(function (field) {
                 var formGroup = field.closest('.form-group');
                 
@@ -243,7 +242,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     if(formGroup) formGroup.classList.remove('has-error');
                 }
 
-                // Special check for email format
                 if (field.type === 'email' && field.value.trim()) {
                     var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                     if (!emailPattern.test(field.value.trim())) {
@@ -253,7 +251,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            // 2. If there are errors, stop submission
             if (!isValid) {
                 var firstError = enquiryForm.querySelector('.has-error');
                 if (firstError) {
@@ -262,9 +259,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // 3. If valid, send data to Formspree
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-            submitBtn.disabled = true;
+            if (submitBtn) {
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+                submitBtn.disabled = true;
+            }
 
             var formData = new FormData(enquiryForm);
 
@@ -275,7 +273,6 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(function (response) {
                 if (response.ok) {
-                    // Success! Calculate estimate and show message
                     var name = document.getElementById('fullName').value;
                     var service = document.getElementById('serviceType').value;
                     var size = document.getElementById('propertySize').value;
@@ -291,12 +288,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     var estimateLow = Math.round(range[0] * sm);
                     var estimateHigh = Math.round(range[1] * sm);
 
-                    // Hide form
                     enquiryForm.querySelectorAll('.form-group, .form-row, #submitBtn').forEach(function(el) {
                         el.style.display = 'none';
                     });
 
-                    // Show success box
                     document.getElementById('successName').textContent = name;
                     document.getElementById('successEstimate').textContent = 'Estimated Cost: R' + estimateLow + ' - R' + estimateHigh;
                     
@@ -305,21 +300,22 @@ document.addEventListener('DOMContentLoaded', function () {
                         successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                 } else {
-                    // Formspree Error
                     alert('Oops! There was a problem submitting your form. Please try again.');
-                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Quote Request';
-                    submitBtn.disabled = false;
+                    if (submitBtn) {
+                        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Quote Request';
+                        submitBtn.disabled = false;
+                    }
                 }
             })
             .catch(function (error) {
-                // Network Error
                 alert('Oops! There was a network error. Please check your connection and try again.');
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Quote Request';
-                submitBtn.disabled = false;
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Quote Request';
+                    submitBtn.disabled = false;
+                }
             });
         });
 
-        // Remove red error borders when the user starts typing
         enquiryForm.querySelectorAll('input, select, textarea').forEach(function (field) {
             field.addEventListener('input', function () {
                 var formGroup = this.closest('.form-group');
@@ -329,11 +325,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       6. CONTACT FORM (contact.html) - Basic Validation
+       6. CONTACT FORM (contact.html) - Validation & Submission
        ============================================================ */
     var contactForm = document.getElementById('contactForm');
 
     if (contactForm) {
+        var contactSuccessBox = document.getElementById('contactSuccessMessage');
+        var contactSubmitBtn = document.getElementById('contactSubmitBtn');
+        var contactErrorBox = document.getElementById('contactFormError');
+        
         contactForm.addEventListener('submit', function (e) {
             e.preventDefault(); 
             
@@ -349,24 +349,71 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     if(formGroup) formGroup.classList.remove('has-error');
                 }
+
+                if (field.type === 'email' && field.value.trim()) {
+                    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailPattern.test(field.value.trim())) {
+                        isValid = false;
+                        if(formGroup) formGroup.classList.add('has-error');
+                    }
+                }
             });
 
             if (!isValid) {
-                var firstError = contactForm.querySelector('.has-error');
-                if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if (contactErrorBox) {
+                    contactErrorBox.hidden = false; 
+                }
+                contactForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 return;
             }
 
-            alert('Thank you! Your message has been submitted.');
-            contactForm.reset();
+            if (contactErrorBox) contactErrorBox.hidden = true;
+            
+            if (contactSubmitBtn) {
+                contactSubmitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                contactSubmitBtn.disabled = true;
+            }
+
+            var formData = new FormData(contactForm);
+
+            fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(function (response) {
+                if (response.ok) {
+                    contactForm.querySelectorAll('.form-group, .form-row, #contactSubmitBtn').forEach(function(el) {
+                        el.style.display = 'none';
+                    });
+
+                    if (contactSuccessBox) {
+                        contactSuccessBox.hidden = false;
+                        contactSuccessBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                } else {
+                    alert('Oops! There was a problem sending your message. Please try again.');
+                    if (contactSubmitBtn) {
+                        contactSubmitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+                        contactSubmitBtn.disabled = false;
+                    }
+                }
+            })
+            .catch(function (error) {
+                alert('Oops! There was a network error. Please try again.');
+                if (contactSubmitBtn) {
+                    contactSubmitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+                    contactSubmitBtn.disabled = false;
+                }
+            });
         });
 
         contactForm.querySelectorAll('input, select, textarea').forEach(function (field) {
             field.addEventListener('input', function () {
                 var formGroup = this.closest('.form-group');
                 if (formGroup) formGroup.classList.remove('has-error');
+                if (contactErrorBox) contactErrorBox.hidden = true;
             });
         });
     }
-
 });
