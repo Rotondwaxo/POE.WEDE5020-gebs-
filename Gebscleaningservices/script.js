@@ -1,7 +1,6 @@
 /**
  * ================================================
  * GEBS CLEANING SERVICES - MAIN JAVASCRIPT
- * Part 3: Interactive Features & Form Validation
  * ================================================
  */
 
@@ -9,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     'use strict';
 
     /* ============================================================
-       1. MOBILE MENU TOGGLE (All pages)
+       1. MOBILE MENU TOGGLE
        ============================================================ */
     var menuToggle = document.querySelector('.menu-toggle');
     var navMenu = document.querySelector('.nav-menu');
@@ -19,13 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
             var isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
             menuToggle.setAttribute('aria-expanded', String(!isExpanded));
             navMenu.classList.toggle('active', !isExpanded);
-        });
-
-        navMenu.querySelectorAll('.nav-link').forEach(function (link) {
-            link.addEventListener('click', function () {
-                menuToggle.setAttribute('aria-expanded', 'false');
-                navMenu.classList.remove('active');
-            });
         });
     }
 
@@ -39,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var noResults    = document.getElementById('noResults');
     var suggestionsBox = document.getElementById('searchSuggestions');
     
-    // Service definitions for the smart suggestions
     var searchData = [
         { name: 'Residential Cleaning', keywords: 'home, house, apartment, domestic, weekly', id: 'residential' },
         { name: 'Commercial Cleaning', keywords: 'office, business, shop, retail, workspace', id: 'commercial' },
@@ -48,11 +39,8 @@ document.addEventListener('DOMContentLoaded', function () {
     ];
 
     if (searchInput && serviceCards.length > 0) {
-
-        // Filter the actual page content
         var filterServices = function (term) {
             var visibleCount = 0;
-
             serviceCards.forEach(function (card) {
                 var keywords = (card.getAttribute('data-keywords') || '') + ' ' +
                                (card.getAttribute('data-service') || '') + ' ' +
@@ -67,7 +55,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             if (noResults) noResults.hidden = visibleCount !== 0;
-
             if (searchInfo) {
                 if (term === '') {
                     searchInfo.innerHTML = 'Showing all services';
@@ -77,24 +64,19 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         };
 
-        // Show/hide smart suggestions
         var showSuggestions = function (term) {
             suggestionsBox.innerHTML = ''; 
-            
             if (term.length < 2) {
                 suggestionsBox.classList.remove('active');
                 return;
             }
-
             var matches = searchData.filter(function(item) {
                 return item.name.toLowerCase().includes(term) || item.keywords.includes(term);
             });
-
             if (matches.length === 0) {
                 suggestionsBox.classList.remove('active');
                 return;
             }
-
             matches.forEach(function(match) {
                 var li = document.createElement('li');
                 li.setAttribute('role', 'option');
@@ -107,7 +89,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     searchInput.value = match.name;
                     suggestionsBox.classList.remove('active');
                     filterServices(match.name.toLowerCase());
-                    
                     var firstResult = document.querySelector('.service-detail:not(.is-hidden)');
                     if (firstResult) {
                         window.scrollTo({
@@ -118,11 +99,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
                 suggestionsBox.appendChild(li);
             });
-
             suggestionsBox.classList.add('active');
         };
 
-        // Event Listeners for Search
         searchInput.addEventListener('input', function () {
             var term = this.value.trim().toLowerCase();
             if (clearBtn) clearBtn.hidden = (term === '');
@@ -157,7 +136,6 @@ document.addEventListener('DOMContentLoaded', function () {
             var isOpen = header.getAttribute('aria-expanded') === 'true';
             var content = header.nextElementSibling;
 
-            // Close all other items
             document.querySelectorAll('.accordion-header').forEach(function (other) {
                 if (other !== header) {
                     other.setAttribute('aria-expanded', 'false');
@@ -166,7 +144,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            // Toggle current
             if (isOpen) {
                 header.setAttribute('aria-expanded', 'false');
                 content.style.maxHeight = null;
@@ -221,9 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         galleryItems.forEach(function (item, index) {
-            item.addEventListener('click', function () {
-                openLightbox(index);
-            });
+            item.addEventListener('click', function () { openLightbox(index); });
         });
 
         closeBtn.addEventListener('click', closeLightbox);
@@ -243,14 +218,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ============================================================
-       5. FORM VALIDATION & PROCESSING (enquiry.html & contact.html)
+       5. FORM VALIDATION & FORMSPREE SUBMISSION (enquiry.html)
        ============================================================ */
-    
-    // --- ENQUIRY FORM ---
     var enquiryForm = document.getElementById('enquiryForm');
 
     if (enquiryForm) {
         var successBox = document.getElementById('successMessage');
+        var submitBtn = document.getElementById('submitBtn');
 
         enquiryForm.addEventListener('submit', function (e) {
             e.preventDefault(); // Stop page reload
@@ -258,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var isValid = true;
             var requiredFields = enquiryForm.querySelectorAll('[required]');
 
-            // 1. Check all required fields
+            // 1. Check all required fields for errors
             requiredFields.forEach(function (field) {
                 var formGroup = field.closest('.form-group');
                 
@@ -288,39 +262,61 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // 3. If valid, process the form
-            var name = document.getElementById('fullName').value;
-            var service = document.getElementById('serviceType').value;
-            var size = document.getElementById('propertySize').value;
-            
-            // Calculate rough estimate
-            var baseRanges = {
-                'residential': [250, 850], 'commercial': [450, 2500],
-                'end-of-lease': [550, 1200], 'carpet': [200, 800]
-            };
-            var sizeMulti = { small: 1, medium: 1.5, large: 2.2 };
-            
-            var range = baseRanges[service] || [250, 850];
-            var sm = sizeMulti[size] || 1;
-            var estimateLow = Math.round(range[0] * sm);
-            var estimateHigh = Math.round(range[1] * sm);
+            // 3. If valid, send data to Formspree
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+            submitBtn.disabled = true;
 
-            // 4. Show Success Message
-            enquiryForm.querySelector('button[type="submit"]').style.display = 'none';
-            
-            // Hide all form groups
-            enquiryForm.querySelectorAll('.form-group, .form-row').forEach(function(el) {
-                el.style.display = 'none';
+            var formData = new FormData(enquiryForm);
+
+            fetch(enquiryForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(function (response) {
+                if (response.ok) {
+                    // Success! Calculate estimate and show message
+                    var name = document.getElementById('fullName').value;
+                    var service = document.getElementById('serviceType').value;
+                    var size = document.getElementById('propertySize').value;
+                    
+                    var baseRanges = {
+                        'residential': [250, 850], 'commercial': [450, 2500],
+                        'end-of-lease': [550, 1200], 'carpet': [200, 800]
+                    };
+                    var sizeMulti = { small: 1, medium: 1.5, large: 2.2 };
+                    
+                    var range = baseRanges[service] || [250, 850];
+                    var sm = sizeMulti[size] || 1;
+                    var estimateLow = Math.round(range[0] * sm);
+                    var estimateHigh = Math.round(range[1] * sm);
+
+                    // Hide form
+                    enquiryForm.querySelectorAll('.form-group, .form-row, #submitBtn').forEach(function(el) {
+                        el.style.display = 'none';
+                    });
+
+                    // Show success box
+                    document.getElementById('successName').textContent = name;
+                    document.getElementById('successEstimate').textContent = 'Estimated Cost: R' + estimateLow + ' - R' + estimateHigh;
+                    
+                    if (successBox) {
+                        successBox.hidden = false;
+                        successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                } else {
+                    // Formspree Error
+                    alert('Oops! There was a problem submitting your form. Please try again.');
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Quote Request';
+                    submitBtn.disabled = false;
+                }
+            })
+            .catch(function (error) {
+                // Network Error
+                alert('Oops! There was a network error. Please check your connection and try again.');
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Quote Request';
+                submitBtn.disabled = false;
             });
-
-            // Populate and show success box
-            if(document.getElementById('successName')) document.getElementById('successName').textContent = name;
-            if(document.getElementById('successEstimate')) document.getElementById('successEstimate').textContent = 'Estimated Cost: R' + estimateLow + ' - R' + estimateHigh;
-            
-            if (successBox) {
-                successBox.hidden = false;
-                successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
         });
 
         // Remove red error borders when the user starts typing
@@ -332,17 +328,18 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // --- CONTACT FORM ---
+    /* ============================================================
+       6. CONTACT FORM (contact.html) - Basic Validation
+       ============================================================ */
     var contactForm = document.getElementById('contactForm');
 
     if (contactForm) {
         contactForm.addEventListener('submit', function (e) {
-            e.preventDefault(); // Stop page reload
+            e.preventDefault(); 
             
             var isValid = true;
             var requiredFields = contactForm.querySelectorAll('[required]');
 
-            // 1. Check required fields
             requiredFields.forEach(function (field) {
                 var formGroup = field.closest('.form-group');
                 
@@ -360,12 +357,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // 2. If valid, show a quick alert and reset
-            alert('Thank you! Your message has been submitted. We will get back to you shortly.');
+            alert('Thank you! Your message has been submitted.');
             contactForm.reset();
         });
 
-        // Remove red error borders when typing
         contactForm.querySelectorAll('input, select, textarea').forEach(function (field) {
             field.addEventListener('input', function () {
                 var formGroup = this.closest('.form-group');
@@ -374,4 +369,4 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-}); // End
+});
